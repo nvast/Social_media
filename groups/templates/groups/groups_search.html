@@ -1,0 +1,150 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block container %}
+<div class="d-flex justify-content-center">
+    <div class="container-home d-flex justify-content-center">
+
+        {% include 'main/left_panel.html' %}
+
+        <div class="middle-panel col-lg-6 mt-5 mr-1 mb-5">
+            <div class="w-100 d-flex justify-content-between align-items-center mt-5">
+                <h1 class="text-white">Groups</h1>
+                <a href="{% url 'create_group' %}"><button type="button" class="btn btn-outline-info ml-auto">Create group</button></a>
+            </div>
+            <div class="d-flex w-100 justify-content-center mt-3 pr-3">
+                <form class="search-container" method="GET" action="{% url 'search_groups' %}">
+                    <input type="search" id="search-input" name="search" placeholder="Find group..." class="search-input">
+                    <button type="submit" class="search-icon"><img src="{% static 'images/search.png' %}"></button>
+                </form>
+            </div>
+
+
+            <div class="row">
+                {% if find_groups.exists %}
+                    {% for group in find_groups %}
+                    <div class="col-sm-6">
+                        <div class="card border border-info mt-5 mx-auto groups-card">
+                            <div class="border-bottom border-info">
+                                <a href="{% url 'group' group.name %}"><img class="groups-photo d-flex justify-content-center"
+                                     src="{{ group.picture.url }}" alt="Card image cap"></a>
+                            </div>
+                            <div class="card-body">
+                                <a href="{% url 'group' group.name %}"><h6 class="card-text groups-name-text">{{ group.name }}</h6></a>
+                                <p class="card-text minor-text">{{ group.type }}</p>
+                                {% if group in current_user_groups  or group in current_user_mods%}
+                                    <form method="post">
+                                        {% csrf_token %}
+                                        <input type="hidden" value="{{group.name}}" name="name">
+                                        <input type="hidden" value="{{group.id}}" name="pk">
+                                        <button class="btn btn-outline-info groups-leave" name="leave_group">Leave group</button>
+                                    </form>
+                                {% elif group.owner == request.user %}
+                                    <a href="{% url 'group' group.name %}"><p class="btn btn-outline-info groups-visit">Visit your group!</p></a>
+                                {% else %}
+                                    <form method="post">
+                                        {% csrf_token %}
+                                        <input type="hidden" value="{{group.name}}" name="name">
+                                        <input type="hidden" value="{{group.id}}" name="pk">
+                                        <button class="btn btn-outline-info groups-join-now" name="join_now">Join now!</button>
+                                    </form>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="mt-5 mx-auto text-white">
+                        <h4>No group matches searched requirements</h4>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+
+        <div class="right-panel mt-5 mb-5 ml-4 d-flex flex-column" id="right-panel">
+
+            <section class="chat-choice-div-r" id="testimonials">
+                <div id="testimonial-carousel" class="carousel slide" data-interval="false">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active container-fluid">
+                            <h3 class="mb-3 mt-1 text-center text-white">Followed Groups</h3>
+                            <div class="chat-choice-div-r scrollable mb-3">
+                                {% for group in current_user_groups %}
+                                <div class="card border border-info mt-3 pb-3 mx-auto my-groups-card">
+                                    <div class="border-bottom border-info">
+                                        <a href="{% url 'group' group.name %}"><img
+                                                class="my-groups-photo d-flex justify-content-center"
+                                                src="{{ group.picture.url }}" alt="Card image cap"></a>
+                                    </div>
+                                    <div class="card-body p-2 d-flex flex-column align-items-center">
+                                        <a href="{% url 'group' group.name %}">
+                                            <p class="card-text groups-name-text">{{ group.name }}</p></a>
+                                        <p class="minor-text">{{ group.type }}</p>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <div class="carousel-item container-fluid">
+                            <h3 class="mb-3 mt-1 text-center text-white">Owned Groups</h3>
+                            <div class="chat-choice-div-r scrollable mb-3">
+                                {% for group in owned_groups %}
+                                <div class="card border border-info mt-3 pb-3 mx-auto my-groups-card">
+                                    <div class="border-bottom border-info">
+                                        <a href="{% url 'group' group.name %}">
+                                            <img class="my-groups-photo d-flex justify-content-center"
+                                                 src="{{ group.picture.url }}" alt="Card image cap"></a>
+                                    </div>
+                                    <div class="card-body p-2 d-flex flex-column align-items-center">
+                                        <a href="{% url 'group' group.name %}">
+                                            <p class="card-text groups-name-text">{{ group.name }}</p></a>
+                                        <p class="minor-text">{{ group.type }}</p>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <div class="carousel-item container-fluid">
+                            <h3 class="mb-3 mt-1 text-center text-white">Mod Groups</h3>
+                            <div class="chat-choice-div-r scrollable mb-3">
+                                {% for group in current_user_mods %}
+                                <div class="card border border-info mt-3 pb-3 mx-auto my-groups-card">
+                                    <div class="border-bottom border-info">
+                                        <a href="{% url 'group' group.name %}">
+                                            <img class="my-groups-photo d-flex justify-content-center"
+                                                 src="{{ group.picture.url }}" alt="Card image cap"></a>
+                                    </div>
+                                    <div class="card-body p-2 d-flex flex-column align-items-center">
+                                        <a href="{% url 'group' group.name %}">
+                                            <p class="card-text groups-name-text">{{ group.name }}</p></a>
+                                        <p class="minor-text">{{ group.type }}</p>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="d-inline-flex justify-content-center mt-5">
+                <a href="#testimonial-carousel" class="groups-choose mt-3 mr-5" role="button" data-slide="prev">
+                    <img class="groups-choose" src="{% static 'images/back.png' %}">
+                </a>
+                <a href="#testimonial-carousel" class="groups-choose mt-3 ml-5 mr-1" role="button" data-slide="next">
+                    <img class="groups-choose" src="{% static 'images/next.png' %}">
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="mt-5"></div>
+</footer>
+
+{% endblock %}

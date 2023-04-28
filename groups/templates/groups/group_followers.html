@@ -1,0 +1,124 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% load tz %}
+
+{% block container %}
+
+<div class="d-flex justify-content-center">
+    <div class="container-home d-flex justify-content-center">
+
+        {% include 'main/left_panel.html' %}
+
+        <div class="middle-panel col-lg-6 mt-5 mr-1 mb-5">
+            <h1 class="mt-5 text-white mb-3">Group followers</h1>
+            {% for follower in all_followers %}
+                <div class="card chat-me mt-1 chat-card">
+                    <div class="card-body d-inline-flex">
+                        <div><img class="profile-photo-follow" src="{{ follower.userinfo.profile_pic.url }}" alt="Profile picture"></div>
+                        <div class="w-75 ml-4">
+                            <h4 class="ml-3 d-inline-flex"><a href="{% url 'profile' follower.username %}">{{ follower.username }}</a></h4>
+
+                            {% timezone "Europe/Berlin" %}
+                                <p class="ml-3">Joined:&nbsp; {{ follower.joined_date|date:'H:i' }} &nbsp; {{ follower.joined_date|date:'d. m. Y' }}</p>
+                            {% endtimezone %}
+
+                            {% if current_user == owner or current_user in all_mods or current_user == follower %}
+                            <form action="{% url 'delete_follower' current_group.name %}" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" value="{{ follower }}" name="group_follower">
+                                <button class="delete-chat" type="submit" name="delete_follower">
+                                    <img src="{% static 'images/delete.png' %}"></button>
+                            </form>
+                            {% endif %}
+
+                            {% if current_user == owner and follower in all_mods %}
+                                <form action="{% url 'delete_moderator' current_group.name %}" method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" value="{{ follower }}" name="group_follower">
+                                    <button class="mod" type="submit" name="delete_moderator">
+                                        <img src="{% static 'images/mod.png' %}"></button>
+                                </form>
+                            {% elif current_user == owner and follower not in all_mods %}
+                                <form action="{% url 'add_moderator' current_group.name %}" method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" value="{{ follower }}" name="group_follower">
+                                    <button class="mod" type="submit" name="add_moderator">
+                                        <img src="{% static 'images/no-mod.png' %}"></button>
+                                </form>
+                            {% endif %}
+
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div>
+
+
+<!-- right panel -->
+        <div class="right-panel mt-5 mb-5 ml-4">
+            <div class="profile-photo mx-auto"><img src="{{ current_group.picture.url }}"></div>
+
+            <div class="mt-3 d-flex justify-content-center">
+                {% if request.user == current_group.owner %}
+                    <form id="upload-form" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <label for="profile-photo-input" class="btn btn-outline-info">Upload photo</label>
+                        <input type="file" id="profile-photo-input" name="group_photo" class="d-none">
+                    </form>
+
+                    <button type="button" class="btn btn-outline-info dropdown-toggle group-owner-dropdown" data-toggle="dropdown"></button>
+                    <div class="dropdown-menu bg-dark">
+                        <a class="dropdown-item text-white" href="{% url 'group' current_group.name %}">Main page</a>
+                        <a class="dropdown-item text-white" href="{% url 'group_moderators' current_group.name %}">Moderators</a>
+                        <a class="dropdown-item text-white" href="{% url 'group_invite' current_group.name %}">Invite friends</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item red-text" href="{% url 'delete_follower' current_group.name %}">Leave group</a>
+                        <a class="dropdown-item red-text" href="#">Delete group</a>
+                    </div>
+
+                {% else %}
+                    {% if request.user in current_group.followers.all or request.user in current_group.moderators.all %}
+                        <a href="{% url 'leave_group' current_group.name %}"><button class="btn btn-outline-info" name="leave_group">Leave group</button></a>
+
+                        <button type="button" class="btn btn-outline-info dropdown-toggle group-owner-dropdown" data-toggle="dropdown"></button>
+                        <div class="dropdown-menu bg-dark">
+                            <a class="dropdown-item text-white" href="{% url 'group' current_group.name %}">Main page</a>
+                            <a class="dropdown-item text-white" href="{% url 'group_moderators' current_group.name %}">Moderators</a>
+                            <a class="dropdown-item text-white" href="{% url 'group_invite' current_group.name %}">Invite friends</a>
+                        </div>
+
+                        {% else %}
+                        <form method="post">
+                            {% csrf_token %}
+                            <input type="hidden" value="{{current_group.name}}" name="name">
+                            <input type="hidden" value="{{current_group.id}}" name="pk">
+                            <button class="btn btn-outline-info" name="join_now">Join now!</button>
+                        </form>
+                    {% endif %}
+                {% endif %}
+            </div>
+
+            <div class="group-info ml-4 mt-3">
+                <p class="d-inline-flex">Name: <p class="ml-3 d-inline-flex">{{ current_group.name }}</p></p>
+                <p class="d-inline-flex">Type: <p class="ml-3 d-inline-flex">{{ current_group.type }}</p></p>
+                {% if current_group.private == False %}
+                    <p class="d-inline-flex">Private: <p class="ml-3 d-inline-flex">No</p></p>
+                {% else %}
+                    <p class="d-inline-flex">Private: <p class="ml-3 d-inline-flex">Yes</p></p>
+                {% endif %}
+                <p class="d-inline-flex">Owner: <p class="ml-3 d-inline-flex"><a href="{% url 'profile' current_group.owner.username %}">{{ current_group.owner.username }}</a></p></p>
+                <p class="d-inline-flex">Followers: <p class="ml-3 d-inline-flex">{{ current_group.followers.all.count }}</p></p>
+
+                {% if request.user == current_group.owner %}
+                    <a href="{% url 'edit_group' current_group.name %}">
+                        <img src="{% static 'images/edit.png' %}">
+                    </a>
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

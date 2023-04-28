@@ -1,0 +1,25 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block container %}
+
+<div class="d-flex justify-content-center">
+      <div class="container-home d-flex justify-content-center">
+
+          {% include 'main/left_panel.html' %}
+
+        <div class="middle-panel col-lg-6 mt-5">
+        <h1 class="mt-5 text-white">Edit</h1>
+
+        <form method="post" class="mt-5 new-post pb-3">
+            {% csrf_token %}
+            <textarea class="form-control" rows="3" cols="35" name="post_text">{{ post_text }}</textarea>
+            <div class="d-flex justify-content-end">
+                <button type="submit" class="btn btn-outline-info mt-3" name="save-edit">Save</button>
+            </div>
+        </form>
+
+        </div>
+      </div>
+</div>
+{% endblock %}

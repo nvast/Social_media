@@ -1,0 +1,52 @@
+{% extends 'main/base.html'%}
+{% load static %}
+
+{% block container %}
+
+<div class="d-flex justify-content-center">
+      <div class="container-home d-flex justify-content-center">
+
+          {% include 'main/left_panel.html' %}
+
+          <div class="follow-panel mt-5 d-inline-flex">
+
+              <div class="card-body mt-4">
+                  <h2 class="text-center mb-5 text-white">Your follows</h2>
+                  <div class="show-follows d-block scrollable">
+                    {% for follow in all_follows %}
+                        {% if follow.from_user == current_user %}
+                            <div class="mt-3 d-flex align-items-center">
+                                <div class="ml-3"><img class="profile-photo-follow" src="{{ follow.to_user.userinfo.profile_pic.url }}" alt="Profile picture"></div>
+                                <h4 class="d-inline-flex mr-2 ml-4"><a href="{% url 'profile' follow.to_user.username %}">{{ follow.to_user.username }}</a></h4>
+                                <a class="ml-auto" href="{% url 'unfollow' follow.to_user.username %}"><img src="{% static 'images/delete.png' %}"></a>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                  </div>
+              </div>
+
+              <div class="card-body mt-4">
+                  <h2 class="text-center mb-5 text-white">Followed by</h2>
+                  <div class="show-follows d-block scrollable">
+                      {% for follow in all_follows %}
+                        {% if follow.to_user == current_user %}
+                            <div class="mt-3 d-flex align-items-center">
+                                <div class="ml-3"><img class="profile-photo-follow" src="{{ follow.from_user.userinfo.profile_pic.url }}" alt="Profile picture"></div>
+                                <h4 class="d-inline-flex mr-2 ml-4"><a href="{% url 'profile' follow.from_user.username %}">{{ follow.from_user.username }}</a></h4>
+                                <a class="ml-auto" href="{% url 'cancel_unfollow' follow.from_user.username %}"><img src="{% static 'images/delete.png' %}"></a>
+                            </div>
+                        {% endif %}
+                      {% endfor %}
+                  </div>
+              </div>
+
+
+          </div>
+      </div>
+    </div>
+
+
+<footer>
+    <div class="mt-5"></div>
+</footer>
+{% endblock %}

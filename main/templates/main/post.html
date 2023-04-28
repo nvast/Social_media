@@ -1,0 +1,97 @@
+{% extends 'main/base.html'%}
+{% load static %}
+
+{% block container %}
+
+<div class="d-flex justify-content-center">
+    <div class="container-home d-flex justify-content-center">
+
+        {% include 'main/left_panel.html' %}
+
+        <div class="middle-panel mt-5 d-inline-flex justify-content-center align-items-start">
+
+            <!-- posts -->
+
+            <div class="all-posts card mt-5 w-50">
+                <div class="card-body card-body-post d-block">
+                    <div class="profile-photo-comment mx-auto"><img src="{{ post.user_id.userinfo.profile_pic.url }}" alt="Profile picture"></div>
+                    <h4 class="d-inline-flex mr-2 ml-2"><a href="{% url 'profile' post.username %}">{{ post.username }}</a></h4>
+                    {% if post.username != post.user_profile_name %}
+                      <h5 class="d-inline-flex">   ►
+                          <a class="ml-2" href="{% url 'profile' post.user_profile_name %}">{{post.user_profile_name}}</a></h5>
+                    {% endif %}
+                    <p class="d-inline-flex ml-3">{{ post.date }} {{ post.time }}</p>
+                    {% if current_user.username == post.user_profile_name or current_user.username == post.username %}
+                        <form action="{% url 'delete_post' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" value="{{post.id}}" name="post">
+                            <button class="delete" type="submit" name="delete_post">
+                                <img src="{% static 'images/delete.png' %}"></button>
+                        </form>
+                        {% if current_user.username == post.username %}
+                            <a href="{% url 'edit_post' post.id %}"><button class="edit" type="submit" name="edit_post">
+                                <img src="{% static 'images/edit.png' %}"></button></a>
+                        {% endif %}
+                    {% endif %}
+
+                    <p class="mt-2 ml-5">{{ post.post }}</p>
+                </div>
+
+<!-- likes -->
+            <div class="d-inline-flex">
+                <form action="{% url 'post_like' post.id %}" method="GET">
+                    {% csrf_token %}
+                    {% if request.user in post.likes.all %}
+                        <button type="submit" class="btn btn-sm like ml-3">
+                            <img src="{% static 'images/heart.png' %}"></button>
+                    {% else %}
+                        <button type="submit" class="btn btn-sm like ml-3">
+                            <img src="{% static 'images/favourite.png' %}"></button>
+                    {% endif %}
+                </form>
+                {% if post.likes.all.count == 1 %}
+                    <p class="mt-1 ml-2">{{ post.likes.all.count }} like</p>
+                {% else %}
+                    <p class="mt-1 ml-2">{{ post.likes.all.count }} likes</p>
+                {% endif %}
+            </div>
+<!-- add comment -->
+            <form method="post">
+                {% csrf_token %}
+                <div class="input-group">
+                    <input type="hidden" name="post_id" value="{{ post.id }}">
+                    {{ comment_form }}
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-info" type="submit" name="comment-submit">Submit
+                        </button>
+                    </div>
+                </div>
+            </form>
+<!-- display comments -->
+                <div class="comments-scrollable">
+                    {% for comment in comments %}
+                        {% if comment.post_id_id == post.id %}
+                            <div class="card-body card-body-post divider-grey ml-5 mr-5">
+                                <div class="profile-photo-comment mx-auto"><img src="{{ comment.user_id.userinfo.profile_pic.url }}" alt="Profile picture"></div>
+                                <h5 class="d-inline-flex ml-2"><a href="{% url 'profile' comment.username %}">{{ comment.username }}</a></h5>
+                                <p class="comment mt-2 ml-2">{{ comment.text }}</p>
+                                {% if comment.post_id.user_id == request.user or comment.post_id.to_user == request.user or comment.user_id == request.user %}
+                                    <form action="{% url 'delete_comment' %}" method="post">
+                                        {% csrf_token %}
+                                        <input type="hidden" value="{{comment.id}}" name="comment">
+                                        <button class="delete-comment" type="submit" name="delete_comment">
+                                            <img src="{% static 'images/delete.png' %}"></button>
+                                    </form>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

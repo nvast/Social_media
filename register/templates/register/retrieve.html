@@ -1,0 +1,36 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block navbar %}{% endblock %}
+
+{% block main %}
+<img class="front-bg" src="{% static 'images/front-bg.jpg' %}">
+{% endblock %}
+
+{% block container %}
+
+<div class="d-flex justify-content-center align-items-center login-wrapper">
+    <div class="card">
+        <div class="mt-4"><h1 class="d-flex justify-content-center">Retrieve</h1></div>
+        <div class="card-body">
+            <form method="POST" class="form" action="{% url 'retrieve' %}">
+                {% csrf_token %}
+                <label class="d-block">Email</label>
+                <input type="text" name="email" class="form form-control">
+                <div class="d-flex justify-content-center mt-4 mb-4">
+                    <button class="btn btn-outline-info" type="submit">Retrieve</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% if messages %}
+    <div class="flash">
+        {% for message in messages %}
+            <h4 class="d-flex justify-content-center mt-5">{{ message }}</h4>
+        {% endfor %}
+    </div>
+{% endif %}
+
+{% endblock %}

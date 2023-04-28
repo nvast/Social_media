@@ -1,0 +1,76 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load tz %}
+
+{% block container %}
+
+
+<div class="d-flex justify-content-center">
+    <div class="container-home d-flex justify-content-center">
+
+        {% include 'main/left_panel.html' %}
+
+        <div class="middle-panel col-lg-6 mt-5 mr-1">
+
+            <div class="chat-choice-div mt-5 d-flex flex-column scrollable">
+                <h1 class="mb-5 text-white">Recent chats</h1>
+
+                {% for chat in all_chats %}
+                    {% if chat.sender == current_user %}
+                        <div class="card chat-me mt-1 chat-card">
+                            <div class="card-body d-inline-flex">
+                                <div><img class="profile-photo-follow" src="{{ chat.recipient.userinfo.profile_pic.url }}" alt="Profile picture"></div>
+                                <div class="w-75 ml-4">
+                                    <h4 class="ml-3 d-inline-flex"><a href="{% url 'chat' chat.conversation_id %}">{{ chat.recipient.username }}</a></h4>
+                                    {% timezone "Europe/Berlin" %}
+                                    <div class="ml-3 d-inline-flex"><small>{{ chat.timestamp|date:'H:i' }}&nbsp;&nbsp;{{ chat.timestamp|date:'d. m.' }}</small></div>
+                                    {% endtimezone %}
+                                    <form action="{% url 'chat_delete' %}" method="post">
+                                        {% csrf_token %}
+                                        <input type="hidden" value="{{chat.conversation_id}}" name="chat">
+                                        <button class="delete-chat" type="submit" name="delete_chat">
+                                            <img src="{% static 'images/delete.png' %}"></button>
+                                    </form>
+                                    <p class="ml-3 chat-message-choice">{{ chat.message }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    {% elif chat.recipient == current_user %}
+                        <div class="card chat-me mr-auto mt-1 chat-card">
+                            <div class="card-body d-inline-flex">
+                                <div><img class="profile-photo-follow" src="{{ chat.sender.userinfo.profile_pic.url }}" alt="Profile picture"></div>
+                                <div class="w-75 ml-4">
+                                    <h4 class="ml-3 d-inline-flex"><a href="{% url 'chat' chat.conversation_id %}">{{ chat.sender.username }}</a></h4>
+                                    <div class="ml-3 d-inline-flex"><small>{{ chat.timestamp|date:'H:i' }}&nbsp;&nbsp;{{ chat.timestamp|date:'d. m.' }}</small></div>
+                                    <form action="{% url 'chat_delete' %}" method="post">
+                                        {% csrf_token %}
+                                        <input type="hidden" value="{{chat.conversation_id}}" name="chat">
+                                        <button class="delete-chat" type="submit" name="delete_chat">
+                                            <img src="{% static 'images/delete.png' %}"></button>
+                                    </form>
+                                    <p class="ml-3 chat-message-choice">{{ chat.message }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+
+            </div>
+        </div>
+        <div class="right-panel mt-5 mb-5 ml-4">
+            <h1 class="mb-5 mt-1 ml-4 text-white">Start chat</h1>
+            <div class="chat-choice-div-r d-flex flex-column scrollable mb-3">
+                {% for user in my_follows %}
+                    <div class="card chat-me mx-auto mt-1 right-panel-chat-card">
+                        <div class="card-body d-flex">
+                            <div class="profile-photo-chat"><img class="profile-photo-chat" src="{{ user.to_user.userinfo.profile_pic.url }}" alt="Profile picture"></div>
+                            <h5 class="d-inline-flex ml-4 vertical-align-center"><a href="{% url 'chat' unique_id %}?name={{ user.to_user.username }}">{{ user.to_user.username }}</a></h5>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends 'main/base.html'%}
+{% load static %}
+
+{% block container %}
+
+<div class="d-flex justify-content-center">
+      <div class="container-home d-flex justify-content-center">
+
+          {% include 'main/left_panel.html' %}
+
+          <div class="follow-panel mt-5 d-inline-flex">
+
+              <div class="card-body mt-4">
+                  <h2 class="text-center mb-5 text-white">Your follows</h2>
+                  <div class="show-follows d-block scrollable">
+                      {% for follow in all_follows %}
+                          {% if follow.from_user == current_user %}
+                              {% if follow.to_user != current_group.owner or follow.to_user not in current_group.followers or follow.to_user not in current_group.moderators %}
+                                  <div class="mt-3 d-flex align-items-center">
+                                      <div class="ml-3"><img class="profile-photo-follow" src="{{ follow.to_user.userinfo.profile_pic.url }}" alt="Profile picture"></div>
+                                      <h4 class="d-inline-flex mr-2 ml-4"><a href="{% url 'profile' follow.to_user.username %}">{{ follow.to_user.username }}</a></h4>
+                                      {% if follow.to_user in current_group_invites %}
+                                          <form class="ml-auto" method="post">
+                                              {% csrf_token %}
+                                              <input type="hidden" name="name" value="{{follow.to_user.username}}">
+                                              <button class="invite-followers" name="cancel_invite" type="submit"><img src="{% static 'images/delete.png' %}"></button>
+                                          </form>
+                                      {% else %}
+                                          <form class="ml-auto" method="post">
+                                              {% csrf_token %}
+                                              <input type="hidden" name="name" value="{{follow.to_user.username}}">
+                                              <button class="invite-followers" name="invite" type="submit"><img src="{% static 'images/invite.png' %}"></button>
+                                          </form>
+                                      {% endif %}
+                                  </div>
+                              {% endif %}
+                          {% endif %}
+                      {% endfor %}
+                  </div>
+              </div>
+
+              <div class="card-body mt-4">
+                  <h2 class="text-center mb-5 text-white">Followed by</h2>
+                  <div class="show-follows d-block scrollable">
+                      {% for follow in all_follows %}
+                          {% if follow.to_user == current_user %}
+                              {% if follow.from_user != current_group.owner or follow.from_user not in current_group.followers or follow.from_user not in current_group.moderators %}
+                                  <div class="mt-3 d-flex align-items-center">
+                                      <div class="ml-3"><img class="profile-photo-follow" src="{{ follow.from_user.userinfo.profile_pic.url }}" alt="Profile picture"></div>
+                                      <h4 class="d-inline-flex mr-2 ml-4"><a href="{% url 'profile' follow.from_user.username %}">{{ follow.from_user.username }}</a></h4>
+                                      {% if follow.from_user in current_group_invites %}
+                                          <form class="ml-auto" method="post">
+                                              {% csrf_token %}
+                                              <input type="hidden" name="name" value="{{follow.from_user.username}}">
+                                              <button class="invite-followers" name="cancel_invite" type="submit"><img src="{% static 'images/delete.png' %}"></button>
+                                          </form>
+                                      {% else %}
+                                          <form class="ml-auto" method="post">
+                                              {% csrf_token %}
+                                              <input type="hidden" name="name" value="{{follow.from_user.username}}">
+                                              <button class="invite-followers" name="invite" type="submit"><img src="{% static 'images/invite.png' %}"></button>
+                                          </form>
+                                      {% endif %}
+                                  </div>
+                              {% endif %}
+                          {% endif %}
+                      {% endfor %}
+                  </div>
+              </div>
+
+
+          </div>
+      </div>
+    </div>
+
+{% endblock %}

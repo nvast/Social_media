@@ -1,0 +1,31 @@
+{% load static %}
+
+<div class="left-panel mt-5 mb-5">
+    <div class="group mb-3">
+        <a class="group-link" href="/follows/">
+            <img class="group-image ml-4" src="{% static 'images/friends.png' %}">
+            <p class="group-text">Follows</p>
+        </a>
+    </div>
+
+    <div class="group mb-3">
+        <a class="group-link" href="/groups/">
+            <img class="group-image ml-4" src="{% static 'images/group.png' %}">
+            <p class="group-text">Groups</p>
+        </a>
+    </div>
+
+    <div class="group mb-3">
+        <a class="group-link" href="#">
+            <img class="group-image ml-4" src="{% static 'images/gallery.png' %}">
+            <p class="group-text">Gallery</p>
+        </a>
+    </div>
+
+    <div class="group mb-3">
+        <a class="group-link" href="{% url 'chat_choice' request.user.username %}">
+            <img class="group-image ml-4" src="{% static 'images/message.png' %}">
+            <p class="group-text">Messages</p>
+        </a>
+    </div>
+</div>

@@ -1,0 +1,685 @@
+html::-webkit-scrollbar{
+    width: 0.8rem;
+}
+
+html::-webkit-scrollbar-thumb {
+  background-color: #5bc0de;
+}
+
+html::-webkit-scrollbar-track {
+  background-color: #2C3333;
+}
+
+/* bg */
+.front-bg{
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  filter: blur(3px);
+  z-index: -1;
+}
+
+.border-shadow{
+    box-shadow: 0 0 10px #fff;
+    border-radius: 15px;
+}
+
+/* navbar */
+nav {
+    z-index: 1;
+    position: fixed;
+    top:0;
+    left:0;
+    height: auto;
+}
+
+.nav-item:hover{
+    cursor: pointer;
+}
+
+.nav-item-card{
+    width: 285px;
+}
+
+.navbar{
+    border-bottom: black 5px solid;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  background-color: #F0F2F5;
+  border-radius: 25px;
+  padding: 5px 12px;
+  width: 300px;
+}
+
+.search-input {
+  border: none;
+  flex: 1;
+  margin-left: 12px;
+  font-size: 16px;
+  background-color: #F0F2F5;
+  outline: none;
+}
+
+.search-icon {
+    border: none;
+    outline: none;
+}
+
+.search-icon:focus{
+    outline: none;
+}
+
+.bg-black{
+    background-color: black;
+    height: 20px;
+    width: 20px;
+    position: absolute;
+    left: 30px;
+    bottom: 3px;
+}
+
+.bg-black img {
+    height: 15px;
+    width: 15px;
+}
+
+.card-dropdown{
+    width: 250px;
+    background-color: #2C3333;
+    color: #5bc0de;
+}
+
+.card-dropdown a:hover{
+    text-decoration: none;
+}
+
+/* index */
+
+.container-index{
+    background-color: #292b2c;
+    height: 55vh;
+    width: 100vh;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 10px #fff;
+    border-radius: 15px;
+}
+
+.index-intro{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 23vh;
+}
+
+.index-h1{
+    font-size: 7vh;
+    color: #5bc0de;
+    margin: 5vh;
+    font-family: 'Playfair Display', serif;
+}
+
+.intro{
+    color: #F1F6F5;
+    padding: 5vh;
+}
+
+.log:hover{
+    text-decoration: none;
+    color: #82C3EC;
+    transform: scale(1.3);
+    transition: transform 0.5s ease;
+}
+
+/* left panel */
+.left-panel {
+  position: fixed;
+  top: 6vh;
+  left: 10%;
+  bottom: 0;
+  width: 18%;
+  border-right: solid 2px grey;
+}
+
+.left-panel a{
+    text-decoration: none;
+}
+
+.left-panel p:hover{
+    color: #5bc0de;
+}
+
+/* main page */
+.main-page{
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-page-container{
+    height: 90vh;
+    width: 80%;
+    background-color: #292b2c;
+    border: 3px black solid;
+}
+
+/* login/register */
+
+.card{
+    width: 50vh;
+    min-height: 10vh;
+    color: #5bc0de;
+    background-color: #2C3333;
+}
+
+.login-wrapper{
+    height: 100vh;
+}
+
+.card-body a{
+    color: white;
+    text-decoration: none;
+}
+
+.card-body a:hover{
+    color: #5bc0de;
+    text-decoration: underline;
+}
+
+/* handle posts*/
+
+.container-home{
+    background-color: #292b2c;
+    min-height: 95vh;
+    height: 100%;
+    width: 80%;
+    box-shadow: 0 0 10px #fff;
+    border-radius: 15px;
+}
+
+.middle-panel{
+    width: 180vh;
+}
+
+.new-post{
+    border-bottom: 2px solid grey;
+}
+
+.all-posts{
+    width: 100%;
+    background-color: #333333;
+    color: #fff;
+}
+
+.group-text{
+    display: inline-block;
+    color: #fff;
+    margin-left: 4vh;
+}
+
+
+.like{
+    background: none;
+    border: none;
+    outline: none;
+    padding: 0;
+}
+
+.like:focus{
+    border: none;
+    outline: none;
+}
+
+@media (max-height: 900px) {
+.comments-scrollable{
+    overflow-y: auto;
+    max-height: 47.9vh;
+}
+}
+
+@media (min-height: 899px) {
+.comments-scrollable{
+    overflow-y: auto;
+    max-height: 61.4vh;
+}
+}
+
+.comments-scrollable::-webkit-scrollbar {
+  width: 0.3rem;
+}
+.comments-scrollable::-webkit-scrollbar-thumb {
+  background-color: #5bc0de;
+}
+.comments-scrollable::-webkit-scrollbar-track {
+  background-color: #2C3333;
+}
+
+/* right panel profile */
+.right-panel {
+  position: fixed;
+  top: 6vh;
+  left: 70%;
+  bottom: 0;
+  width: 18%;
+  border-left: solid 2px grey;
+}
+
+.right-panel a{
+    text-decoration: none;
+}
+
+.right-panel p:hover{
+    color: #5bc0de;
+}
+
+
+.profile-photo{
+    width: 80%;
+    height: 30vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-photo img{
+    max-width: 100%;
+    max-height: 100%;
+    height: auto;
+}
+
+.profile-photo-comment{
+    width: 32px;
+    height: 32px;
+    display: inline-flex;
+}
+
+.profile-photo-comment img{
+    max-width: 100%;
+    max-height: 100%;
+    position: relative;
+    top: 8px;
+}
+
+.profile-info{
+    color: white;
+    position: relative;
+}
+
+.profile-info p{
+    margin-bottom: 1vh;
+    position: relative;
+}
+
+.profile-info a{
+    position: absolute;
+    top: 0;
+    right: 10%;
+}
+
+/* edit/delete */
+
+
+.card-body{
+    position: relative;
+    padding-bottom: 0px;
+}
+
+.edit-textarea{
+    border-radius: 30px;
+}
+
+.edit{
+    position: absolute;
+    top: 15px;
+    right: 45px;
+    background-color: transparent;
+    border: none;
+    height: 20px;
+    width: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.delete {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background-color: transparent;
+    border: none;
+    height: 20px;
+    width: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.delete-comment {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    background-color: transparent;
+    border: none;
+    height: 20px;
+    width: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.divider-grey{
+    border-bottom: solid 2px grey;
+}
+
+.edit:focus, .delete:focus{
+    outline: none;
+}
+
+.edit:hover, .delete:hover{
+    cursor: pointer;
+}
+
+/* follow page */
+
+.follow-panel{
+    width: 68%;
+    margin-left: 22.5%;
+}
+
+.show-follows{
+    width: 70%;
+    margin-left: 12%;
+}
+
+.profile-photo-follow{
+    height: 50px;
+    width: 50px;
+    display: inline-flex;
+}
+
+/* chat */
+
+.chat-div{
+    width: 100%;
+}
+
+.chat-me, .chat-not-me{
+    width: 79%;
+}
+
+.chat-card{
+    min-height: 6rem;
+    max-height: 6rem;
+    position: relative;
+}
+
+.inchat-card{
+    background-color: #2C3333;
+    color: #5bc0de;
+    position: relative;
+}
+
+.right-panel-chat-card{
+    min-height: 4rem;
+    max-height: 4rem;
+}
+
+.scrollable {
+  overflow-y: auto;
+  height: 70vh;
+}
+
+.scrollable::-webkit-scrollbar, .scrollable-inchat::-webkit-scrollbar {
+  width: 0.3rem;
+}
+
+.scrollable::-webkit-scrollbar-thumb, .scrollable-inchat::-webkit-scrollbar-thumb {
+  background-color: #5bc0de;
+}
+
+.scrollable::-webkit-scrollbar-track, .scrollable-inchat::-webkit-scrollbar-track {
+  background-color: #2C3333;
+}
+
+.scrollable-inchat {
+  overflow-y: auto;
+  height: 60vh;
+}
+
+.chat-choice-div{
+    width: 100%;
+    max-height: 95%;
+}
+
+@media (min-height: 900px) {
+  .chat-choice-div-r {
+    width: 100%;
+    height: 68vh;
+  }
+}
+
+@media (max-height: 899px) {
+  .chat-choice-div-r {
+    width: 100%;
+    height: 60vh;
+  }
+}
+
+
+.profile-photo-chat{
+    height: 25px;
+    width: 25px;
+    display: inline-flex;
+}
+
+.chat-message{
+    width: 90%;
+    overflow-wrap: anywhere;
+}
+
+.chat-message-choice{
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.delete-chat {
+    position: absolute;
+    top: 2.4rem;
+    right: 15px;
+    background-color: transparent;
+    border: none;
+    height: 20px;
+    width: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.message-datetime{
+    color: #5bc0de;
+}
+
+.message-datetime-me{
+    color: #5bc0de;
+}
+
+.message-datetime-not-me{
+    color: #5bc0de;
+}
+
+/* Groups */
+
+.groups-photo{
+    max-width: 16.8rem;
+    height: 11rem;
+    margin: auto;
+}
+
+.groups-card{
+    width: 17rem;
+    height: 20rem;
+}
+
+.my-groups-card{
+    width: 10rem;
+    height: 12rem;
+    overflow: hidden;
+}
+
+.my-groups-photo{
+    max-width: 10rem;
+    height: 6.5rem;
+    margin: auto;
+}
+
+.minor-text{
+    color: #3d8094;
+}
+
+.groups-name-text{
+    color: #5bc0de;
+}
+
+.groups-join-now{
+    position: absolute;
+    bottom: 1rem;
+    left: 5.5rem;
+}
+
+.groups-leave{
+    position: absolute;
+    bottom: 1rem;
+    left: 5.2rem;
+}
+
+.groups-visit{
+    position: absolute;
+    bottom: 0;
+    left: 4rem;
+}
+
+.group-info{
+    color: white;
+    position:relative;
+}
+
+.group-info p:hover {
+    color: white;
+}
+
+.group-info p{
+    margin-bottom: 1vh;
+    position: relative;
+}
+
+.group-info a{
+    color: white;
+}
+
+.group-info a:hover{
+    text-decoration: underline;
+    color: #5bc0de;
+}
+
+.group-info a img{
+    position: absolute;
+    top: 0;
+    right: 10%;
+}
+
+.groups-choose{
+    width: 2rem;
+    height: 2rem;
+}
+
+.dropdown-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.red-text{
+    color: #FF1E00;
+}
+
+.red-text:hover{
+    background-color: #FF1E00;
+}
+
+.group-owner-dropdown{
+    height: 2.3rem;
+    position: absolute;
+    right: 10%;
+}
+
+.mod{
+    position: absolute;
+    top: 2.4rem;
+    right: 40px;
+    background-color: transparent;
+    border: none;
+    height: 20px;
+    width: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.invite-followers{
+    background-color: transparent;
+    border: none;
+    height: 20px;
+    width: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* notifications */
+
+.divider{
+    border-bottom: solid 2px #5bc0de;
+}
+
+@media (max-height: 900px) {
+.notification-scrollable{
+    overflow-y: auto;
+    max-height: 69vh;
+}
+}
+
+@media (min-height: 899px) {
+.notification-scrollable{
+    overflow-y: auto;
+    max-height: 63.9vh;
+}
+}
+
+.notification-scrollable::-webkit-scrollbar {
+  width: 0.3rem;
+}
+.notification-scrollable::-webkit-scrollbar-thumb {
+  background-color: #5bc0de;
+}
+.notification-scrollable::-webkit-scrollbar-track {
+  background-color: #2C3333;
+}
+
+.card-body-post{
+    flex: 0;
+}
+
+.dropdown-menu a{
+    color: #5bc0de;
+}
+
