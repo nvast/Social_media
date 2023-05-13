@@ -239,6 +239,10 @@ nav {
     outline: none;
 }
 
+.pointer{
+    cursor: pointer;
+}
+
 @media (max-height: 900px) {
 .comments-scrollable{
     overflow-y: auto;

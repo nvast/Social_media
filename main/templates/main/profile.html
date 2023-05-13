@@ -87,7 +87,7 @@
                                   {% csrf_token %}
                                   <input type="hidden" value="{{comment.id}}" name="comment">
                                   <button class="delete-comment" type="submit" name="delete_comment">
-                                      <img src="{% static 'images/delete.png' %}"></button>
+                                      <img class="pointer" src="{% static 'images/delete.png' %}"></button>
                               </form>
                               {% endif %}
                           </div>
