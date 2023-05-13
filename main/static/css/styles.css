@@ -43,7 +43,7 @@ nav {
 }
 
 .navbar{
-    border-bottom: black 5px solid;
+    box-shadow: -1px 6px 9px 0px rgba(0,0,0,0.6);
 }
 
 .search-container {
@@ -144,7 +144,7 @@ nav {
   left: 10%;
   bottom: 0;
   width: 18%;
-  border-right: solid 2px grey;
+  box-shadow: 10px 0px 10px -10px rgba(166,166,166,0.5)
 }
 
 .left-panel a{
@@ -217,6 +217,7 @@ nav {
     width: 100%;
     background-color: #333333;
     color: #fff;
+    box-shadow: 0 0 3px #5bc0de;
 }
 
 .group-text{
@@ -269,7 +270,7 @@ nav {
   left: 70%;
   bottom: 0;
   width: 18%;
-  border-left: solid 2px grey;
+  box-shadow: -10px 0px 10px -10px rgba(166,166,166,0.5);
 }
 
 .right-panel a{
@@ -377,7 +378,7 @@ nav {
 }
 
 .divider-grey{
-    border-bottom: solid 2px grey;
+    box-shadow: 0px 10px 10px -9px rgba(166,166,166,0.2);
 }
 
 .edit:focus, .delete:focus{
